@@ -20,7 +20,7 @@ import { z } from "zod";
 import { Rating } from "./commons/Rating";
 import { useCreateReview } from "@/hooks/mutations/useCreateReview";
 import { Rate } from "@/models/ReviewModel";
-import { Loader } from "./commons/Loader";
+import { Loader } from "./commons/icons/Loader";
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
 import { useDate } from "@/hooks/useDate";

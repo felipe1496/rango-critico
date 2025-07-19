@@ -2,7 +2,7 @@ import useDebounce from "@/hooks/useDebounce";
 import { CityModel } from "@/models/CityModel";
 import { FC, useState } from "react";
 import Select from "react-select";
-import { Loader } from "./commons/Loader";
+import { Loader } from "./commons/icons/Loader";
 import { useListCities } from "@/hooks/queries/useListCities";
 import { ApiParse } from "@/utils/types";
 

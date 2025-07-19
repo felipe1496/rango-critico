@@ -17,7 +17,7 @@ import {
 import { Button } from "./commons/Button";
 import { useDeleteReview } from "@/hooks/mutations/useDeleteReview";
 import { useQueryClient } from "@tanstack/react-query";
-import { Loader } from "./commons/Loader";
+import { Loader } from "./commons/icons/Loader";
 import { useDate } from "@/hooks/useDate";
 import { ApiParse } from "@/utils/types";
 import { toast } from "react-toastify";
@@ -55,20 +55,22 @@ export const ReviewCard: FC<Props> = ({ data }) => {
   };
   return (
     <div className="border border-zinc-200 p-4 rounded-sm w-full">
-      <div className="flex justify-between w-full">
-        <div className="flex gap-4 items-center">
-          <Image
-            src={data.restaurant_avatar_url}
-            alt="Restaurant"
-            width={48}
-            height={48}
-            className="rounded-full"
-          />
-          <div className="flex flex-col">
-            <span className="font-bold">{data.restaurant_name}</span>
-            <span className="text-sm text-zinc-500">
-              {data.city_name + ", " + data.state}
-            </span>
+      <div className="flex w-full justify-between items-start">
+        <div className="flex flex-col gap-4 md:flex-row">
+          <div className="flex gap-4 items-center">
+            <Image
+              src={data.restaurant_avatar_url}
+              alt="Restaurant"
+              width={48}
+              height={48}
+              className="rounded-full"
+            />
+            <div className="flex flex-col">
+              <span className="font-bold">{data.restaurant_name}</span>
+              <span className="text-sm text-zinc-500">
+                {data.city_name + ", " + data.state}
+              </span>
+            </div>
           </div>
 
           <Rating rating={data.rating} disabled />

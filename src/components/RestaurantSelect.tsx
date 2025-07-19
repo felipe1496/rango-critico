@@ -4,7 +4,7 @@ import { RestaurantModel } from "@/models/RestaurantModel";
 import Image from "next/image";
 import { FC, useState } from "react";
 import Select from "react-select";
-import { Loader } from "./commons/Loader";
+import { Loader } from "./commons/icons/Loader";
 
 interface Props {
   selected?: RestaurantModel | null;
