@@ -6,10 +6,8 @@ import { BadRequestException } from "@/utils/errors/BadRequestException";
 import { ApiException } from "@/utils/errors/ApiException";
 import { HTTP_STATUS } from "@/constants/httpStatus";
 
-// Tipos base para os esquemas Zod
 type ZodSchema = z.ZodType<any, any, any>;
 
-// O tipo ApiRequest agora será inferido dinamicamente
 export type ApiRequest<
   TBody extends ZodSchema | null = null,
   TQuery extends ZodSchema | null = null,
@@ -30,7 +28,6 @@ export const handleAPI = <
   TQuery extends ZodSchema | null = null,
   TPath extends ZodSchema | null = null
 >() => {
-  // Armazena os esquemas de validação fornecidos
   let bodySchema: TBody = null as TBody;
   let queryParamsSchema: TQuery = null as TQuery;
   let pathSchema: TPath = null as TPath;
@@ -101,7 +98,6 @@ export const handleAPI = <
         } as ApiRequest<TBody, TQuery, TPath, TParams>;
 
         try {
-          // 1. Validar Query Params
           if (queryParamsSchema) {
             const query = Object.fromEntries(req.nextUrl.searchParams);
             const parsed = queryParamsSchema.safeParse(query);
@@ -117,7 +113,6 @@ export const handleAPI = <
             }
           }
 
-          // 2. Validar Path Params
           if (pathSchema) {
             const parsed = pathSchema.safeParse(context.params ?? {});
 
@@ -132,9 +127,7 @@ export const handleAPI = <
             }
           }
 
-          // 3. Validar Body
           if (bodySchema) {
-            // Ignorar body para métodos que não o possuem
             if (req.method !== "GET" && req.method !== "DELETE") {
               const bodyJson = await req.json().catch(() => {
                 throw new BadRequestException("Invalid body");
@@ -158,10 +151,8 @@ export const handleAPI = <
             middleware(parsedRequest);
           }
 
-          // 4. Executar a função principal com os dados validados
           const result = await handler(parsedRequest, { status });
 
-          // 5. Retornar a resposta
           if (result) {
             return NextResponse.json(result, { status: successStatus });
           } else {
@@ -169,7 +160,7 @@ export const handleAPI = <
           }
         } catch (error) {
           console.error(error);
-          // Captura erros da api
+
           if (error instanceof ApiException && error.name === "ApiException") {
             return NextResponse.json(
               {
@@ -181,14 +172,13 @@ export const handleAPI = <
             );
           }
 
-          // Captura outros erros inesperados
           return NextResponse.json(
             {
               error: HTTP_STATUS[500],
               status: 500,
               message: "An uncaught error occurred",
             },
-            { status: 500 } // Internal Server Error
+            { status: 500 }
           );
         }
       };
