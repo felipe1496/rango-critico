@@ -88,7 +88,7 @@ export function update<T extends object, K = unknown>(table: string) {
     const set = keys(params).map((key) => `${key} = ?`);
     sql += " SET " + set.join(", ");
     if (where) {
-      sql += " WHERE " + where.build().sql;
+      sql += " WHERE " + where.disablePagination().build().sql;
     }
     sql += " RETURNING *;";
     const _params = [...v(params), ...(where ? where.build().values : [])];
@@ -101,7 +101,7 @@ export function $delete(table: string) {
   return async (where?: Where, db?: PoolClient) => {
     let sql = `DELETE FROM ${table}`;
     if (where) {
-      sql += " WHERE " + where.build().sql;
+      sql += " WHERE " + where.disablePagination().build().sql;
     }
     sql += ";";
     const res = await query(sql, where ? where.build().values : [], db);

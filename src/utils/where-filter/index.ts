@@ -12,13 +12,20 @@ export const where = () => {
   const orderBy: { field: string; order: "asc" | "desc" }[] = [];
   let _page = 1;
   let _perPage = 201;
+  let pagination = true;
 
   return {
     page(page: number) {
       _page = page;
+      return this;
     },
     perPage(perPage: number) {
       _perPage = perPage;
+      return this;
+    },
+    disablePagination() {
+      pagination = false;
+      return this;
     },
     orderBy(field: string, order: "asc" | "desc") {
       orderBy.push({ field, order });
@@ -101,7 +108,9 @@ export const where = () => {
           .join(", ")}`;
       }
 
-      where += ` LIMIT ${_perPage} OFFSET ${(_page - 1) * _perPage}`;
+      if (pagination) {
+        where += ` LIMIT ${_perPage} OFFSET ${(_page - 1) * _perPage}`;
+      }
 
       return { sql: where, values };
     },

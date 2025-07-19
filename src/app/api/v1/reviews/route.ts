@@ -44,6 +44,7 @@ export const GET = handleAPI()
   .fn(async (req) => {
     const userId = req.userId;
 
+    // TODO: ordenar por visited_at
     const reviews = await findReviews(
       where().and("user_id", "eq", userId).orderBy("created_at", "desc")
     );

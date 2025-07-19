@@ -20,6 +20,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Loader } from "./commons/Loader";
 import { useDate } from "@/hooks/useDate";
 import { ApiParse } from "@/utils/types";
+import { toast } from "react-toastify";
 
 interface Props {
   data: ApiParse<ReviewDetail>;
@@ -36,6 +37,9 @@ export const ReviewCard: FC<Props> = ({ data }) => {
     onSuccess: () => {
       setOpen(false);
       queryClient.invalidateQueries({ queryKey: ["list-reviews"] });
+    },
+    onError: () => {
+      toast.error("Ocorreu um erro ao excluir a crítica");
     },
   });
 
