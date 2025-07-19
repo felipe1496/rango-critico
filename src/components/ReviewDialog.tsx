@@ -181,7 +181,7 @@ export const ReviewDialog: FC = () => {
 
                 <Textarea
                   placeholder="Escreva sua crítica"
-                  className="h-96"
+                  className="h-60 md:h-80"
                   {...register("content")}
                 />
 

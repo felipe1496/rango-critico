@@ -65,7 +65,7 @@ export const DialogFooter = ({
     <div
       data-slot="dialog-footer"
       className={cn(
-        "flex flex-col-reverse gap-2 p-2 bg-zinc-100 sm:flex-row sm:justify-end rounded-sm",
+        "flex gap-2 p-2 bg-zinc-100 justify-end rounded-sm border-t border-zinc-200",
         className
       )}
       {...props}
