@@ -24,11 +24,6 @@ export type ApiRequest<
   params: TParams;
 };
 
-// O contexto da rota do Next.js, que contém os parâmetros de path
-type RouteContext = {
-  params: Record<string, string | string[]> | undefined;
-};
-
 export const handleAPI = <
   TParams = any,
   TBody extends ZodSchema | null = null,
@@ -96,7 +91,7 @@ export const handleAPI = <
       const status = (status: number) => {
         successStatus = status;
       };
-      return async (req: NextRequest, context: RouteContext) => {
+      return async (req: NextRequest, context: any) => {
         const parsedRequest = {
           body: undefined,
           queryParams: undefined,
