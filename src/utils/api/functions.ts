@@ -3,13 +3,14 @@ import { keys, values as v } from "lodash";
 import { Pool, PoolClient } from "pg";
 import { Ok } from "../types";
 import { Where } from "../where-filter";
+import pkg from "@next/env";
+const { loadEnvConfig } = pkg;
+
+const projectDir = process.cwd();
+loadEnvConfig(projectDir);
 
 export const pool = new Pool({
-  user: "docker",
-  host: "localhost",
-  database: "docker",
-  password: "docker",
-  port: 5432,
+  connectionString: process.env.DATABASE_URL,
   max: 20,
   idleTimeoutMillis: 30000,
 });
