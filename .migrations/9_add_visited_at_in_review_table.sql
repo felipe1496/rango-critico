@@ -1,0 +1,1 @@
+alter table reviews add column visited_at timestamp not null default now();
