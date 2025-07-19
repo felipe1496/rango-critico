@@ -116,10 +116,10 @@ export const ReviewDialog: FC = () => {
     }
     if (step === STEPS.REVIEW) {
       return (
-        <DialogContent className="sm:max-w-[800px]">
+        <DialogContent className="sm:max-w-[800px] max-h-[568px] overflow-scroll">
           <form onSubmit={handleSubmit(onSubmit)}>
             <DialogTitle>{step}</DialogTitle>
-            <div className="p-4 flex justify-between gap-6">
+            <div className="p-4 flex justify-between gap-6 flex-col items-center md:items-start md:flex-row">
               <div>
                 <Image
                   src={restaurant?.avatar_url ?? ""}
@@ -139,36 +139,54 @@ export const ReviewDialog: FC = () => {
                     {restaurant?.description}
                   </span>
                 </div>
-                <div className="flex gap-1">
-                  <span data-error={errors.visited_at?.message}>
-                    Visitado em
-                  </span>
+                <div className="flex flex-col gap-2 items-start">
                   <Controller
                     control={control}
-                    name="visited_at"
-                    render={({ field: { value, onChange } }) => {
-                      return (
-                        <input
-                          type="date"
-                          value={
-                            isDate(value)
-                              ? date(value).format(DATA_FORMATS.YEAR_MONTH_DAY)
-                              : ""
-                          }
-                          onChange={(evt) => {
-                            if (evt.target.value) {
-                              onChange(
-                                date(
-                                  evt.target.value,
-                                  DATA_FORMATS.YEAR_MONTH_DAY
-                                ).toDate()
-                              );
-                            }
-                          }}
-                        />
-                      );
-                    }}
+                    name="city"
+                    render={({ field: { value, onChange } }) => (
+                      <CitySelect
+                        className="w-full"
+                        selected={value}
+                        onChange={onChange}
+                      />
+                    )}
                   />
+                  <div className="text-center">
+                    <span
+                      data-error={errors.visited_at?.message}
+                      className=" shrink-0"
+                    >
+                      Visitado em:
+                    </span>
+                    <Controller
+                      control={control}
+                      name="visited_at"
+                      render={({ field: { value, onChange } }) => {
+                        return (
+                          <input
+                            type="date"
+                            value={
+                              isDate(value)
+                                ? date(value).format(
+                                    DATA_FORMATS.YEAR_MONTH_DAY
+                                  )
+                                : ""
+                            }
+                            onChange={(evt) => {
+                              if (evt.target.value) {
+                                onChange(
+                                  date(
+                                    evt.target.value,
+                                    DATA_FORMATS.YEAR_MONTH_DAY
+                                  ).toDate()
+                                );
+                              }
+                            }}
+                          />
+                        );
+                      }}
+                    />
+                  </div>
                 </div>
 
                 <Controller
@@ -183,14 +201,6 @@ export const ReviewDialog: FC = () => {
                   placeholder="Escreva sua crítica"
                   className="h-60 md:h-80"
                   {...register("content")}
-                />
-
-                <Controller
-                  control={control}
-                  name="city"
-                  render={({ field: { value, onChange } }) => (
-                    <CitySelect selected={value} onChange={onChange} />
-                  )}
                 />
               </div>
             </div>

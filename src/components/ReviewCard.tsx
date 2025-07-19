@@ -35,6 +35,7 @@ export const ReviewCard: FC<Props> = ({ data }) => {
 
   const { mutate, isPending } = useDeleteReview({
     onSuccess: () => {
+      toast.success("Crítica excluida com sucesso!");
       setOpen(false);
       queryClient.invalidateQueries({ queryKey: ["list-reviews"] });
     },

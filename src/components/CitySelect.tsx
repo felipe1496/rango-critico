@@ -1,12 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import useDebounce from "@/hooks/useDebounce";
 import { CityModel } from "@/models/CityModel";
-import { FC, useState } from "react";
+import { ComponentProps, FC, useState } from "react";
 import Select from "react-select";
 import { Loader } from "./commons/icons/Loader";
 import { useListCities } from "@/hooks/queries/useListCities";
 import { ApiParse } from "@/utils/types";
 
-interface Props {
+interface Props
+  extends Omit<
+    ComponentProps<typeof Select>,
+    | "value"
+    | "onChange"
+    | "options"
+    | "isLoading"
+    | "onInputChange"
+    | "filterOption"
+  > {
   selected?: ApiParse<CityModel> | null;
   onChange?: (r: ApiParse<CityModel> | null) => void;
 }
@@ -14,6 +24,7 @@ interface Props {
 export const CitySelect: FC<Props> = ({
   selected = null,
   onChange = () => {},
+  ...props
 }) => {
   const [query, setQuery] = useState("");
 
@@ -58,7 +69,8 @@ export const CitySelect: FC<Props> = ({
       isLoading={isFetching}
       onInputChange={setQuery}
       filterOption={() => true}
-      onChange={(opt) => onChange(opt ? opt?.value : null)}
+      onChange={(opt: any) => onChange(opt ? opt.value : null)}
+      {...props}
     />
   );
 };
