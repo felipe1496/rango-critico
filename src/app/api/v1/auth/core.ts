@@ -1,10 +1,10 @@
+import { ulid } from "ulid";
 import type { CreateUserModel, UserModel } from "@/models/UserModel";
 import { insert, select } from "@/utils/api/functions";
 import { ConflictException } from "@/utils/errors/ConflictException";
 import { InternalServerErrorException } from "@/utils/errors/InternalServerErrorException";
 import { NotFoundException } from "@/utils/errors/NotFoundException";
 import { where } from "@/utils/where-filter";
-import { ulid } from "ulid";
 
 const users = select<UserModel>("users");
 const save = insert<CreateUserModel, UserModel>("users");

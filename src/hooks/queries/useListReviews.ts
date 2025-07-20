@@ -1,11 +1,11 @@
-import { useAPI } from "@/hooks/useAPI";
-import type { ReviewDetail } from "@/models/ReviewModel";
-import type { ApiParse, QueryOpts } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
+import { useAPI } from "@/hooks/useAPI";
+import type { ReviewModel } from "@/models/ReviewModel";
+import type { ApiParse, QueryOpts } from "@/utils/types";
 
 export const useListReviews = ({
 	...props
-}: QueryOpts<{ reviews: ApiParse<ReviewDetail>[] }> = {}) => {
+}: QueryOpts<{ reviews: ApiParse<ReviewModel>[] }> = {}) => {
 	const api = useAPI();
 
 	return useQuery({

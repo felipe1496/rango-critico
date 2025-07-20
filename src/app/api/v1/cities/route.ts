@@ -1,7 +1,8 @@
+import z from "zod";
+import type { CityModel } from "@/models/CityModel";
 import { handleAPI } from "@/utils/api/handleAPI";
 import { authGuard } from "@/utils/api/middlewares/authGuard";
 import { where } from "@/utils/where-filter";
-import z from "zod";
 import { findCities } from "./core";
 
 export const GET = handleAPI()
@@ -11,7 +12,7 @@ export const GET = handleAPI()
 			filter: z.string().optional(),
 		}),
 	)
-	.fn(async (req) => {
+	.fn(async (req): Promise<{ cities: CityModel[] }> => {
 		const filter = where().addExpression(req.queryParams.filter);
 
 		const cities = await findCities(filter);

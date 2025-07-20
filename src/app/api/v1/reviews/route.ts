@@ -1,8 +1,9 @@
+import z from "zod";
+import type { ReviewModel } from "@/models/ReviewModel";
 import { handleAPI } from "@/utils/api/handleAPI";
 import { authGuard } from "@/utils/api/middlewares/authGuard";
-import { createReview, findReviews } from "./core";
-import z from "zod";
 import { where } from "@/utils/where-filter";
+import { createReview, findReviews } from "./core";
 
 export const POST = handleAPI()
 	.middleware(authGuard)
@@ -30,7 +31,7 @@ export const POST = handleAPI()
 			city_id: z.string(),
 		}),
 	)
-	.fn(async (req) => {
+	.fn(async (req): Promise<{ review: ReviewModel }> => {
 		const cretedReview = await createReview({
 			...req.body,
 			user_id: req.userId,
@@ -41,7 +42,7 @@ export const POST = handleAPI()
 
 export const GET = handleAPI()
 	.middleware(authGuard)
-	.fn(async (req) => {
+	.fn(async (req): Promise<{ reviews: ReviewModel[] }> => {
 		const userId = req.userId;
 
 		// TODO: ordenar por visited_at

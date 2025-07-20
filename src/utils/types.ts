@@ -19,6 +19,16 @@ export type Ok<Data = undefined, Err = Error> =
 			: { ok: true; data: Data; err?: undefined })
 	| { ok: false; err: Err; data?: undefined };
 
+export type InferOk<T> = T extends () => Promise<Ok<infer U>>
+	? U
+	: T extends (where?: any) => Promise<Ok<infer U>>
+		? U
+		: never;
+
+export type InferOkProps<T> = T extends (params: infer P, db?: any) => any
+	? P
+	: never;
+
 export type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
 export type QueryOpts<T = any> = PartialBy<

@@ -7,7 +7,7 @@ import { type FC, useState } from "react";
 import { toast } from "react-toastify";
 import { useDeleteReview } from "@/hooks/mutations/useDeleteReview";
 import { useDate } from "@/hooks/useDate";
-import type { ReviewDetail } from "@/models/ReviewModel";
+import type { ReviewModel } from "@/models/ReviewModel";
 import { cn } from "@/utils/functions";
 import type { ApiParse } from "@/utils/types";
 import { Button } from "./commons/Button";
@@ -23,7 +23,7 @@ import { Loader } from "./commons/icons/Loader";
 import { Rating } from "./commons/Rating";
 
 interface Props {
-	data: ApiParse<ReviewDetail>;
+	data: ApiParse<ReviewModel>;
 }
 
 export const ReviewCard: FC<Props> = ({ data }) => {

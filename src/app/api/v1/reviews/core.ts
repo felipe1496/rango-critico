@@ -1,22 +1,61 @@
-import type {
-	CreateDetailReviewModel,
-	CreateReviewModel,
-	ReviewCompanionView,
-	ReviewTagModel,
-	ReviewViewModel,
-} from "@/models/ReviewModel";
-import { $delete, insert, select } from "@/utils/api/functions";
-import { InternalServerErrorException } from "@/utils/errors/InternalServerErrorException";
-
-import { type Where, where } from "@/utils/where-filter";
 import { set, toNumber } from "lodash";
 import { ulid } from "ulid";
+import type { CreateReviewModel, Rate } from "@/models/ReviewModel";
+import { $delete, insert, select } from "@/utils/api/functions";
+import { InternalServerErrorException } from "@/utils/errors/InternalServerErrorException";
+import type { InferOk } from "@/utils/types";
+import { type Where, where } from "@/utils/where-filter";
 
-const reviewsView = select<ReviewViewModel>("v_reviews");
-const reviewsCompanions = select<ReviewCompanionView>("v_reviews_companions");
-const reviewTags = select<ReviewTagModel>("review_tags");
+const reviewsView = select<{
+	id: string;
+	content: string;
+	rating: Rate;
+	restaurant_name: string;
+	restaurant_avatar_url: string;
+	user_id: string;
+	city_name: string;
+	state: string;
+	updated_at: Date;
+	created_at: Date;
+	visited_at: Date;
+}>("v_reviews");
+const reviewsCompanions = select<{
+	review_id: string;
+	companion_name: string;
+	user_id: string;
+	avatar_url: string;
+}>("v_reviews_companions");
+const reviewTags = select<{
+	id: string;
+	review_id: string;
+	tag: string;
+	created_at: Date;
+}>("review_tags");
 const deleteReview = $delete("reviews");
-const insertReview = insert<CreateReviewModel, ReviewViewModel>("reviews");
+const insertReview = insert<
+	{
+		id: string;
+		content: string;
+		rating: Rate;
+		user_id: string;
+		restaurant_id: string;
+		visited_at?: Date;
+		city_id: string;
+	},
+	{
+		id: string;
+		content: string;
+		rating: Rate;
+		restaurant_name: string;
+		restaurant_avatar_url: string;
+		user_id: string;
+		city_name: string;
+		state: string;
+		updated_at: Date;
+		created_at: Date;
+		visited_at: Date;
+	}
+>("reviews");
 
 export const findReviews = async (filter?: Where) => {
 	const reviewsRes = await reviewsView(filter);
@@ -25,7 +64,7 @@ export const findReviews = async (filter?: Where) => {
 		throw new InternalServerErrorException("Error finding reviews");
 	}
 
-	let companions: ReviewCompanionView[] = [];
+	let companions: InferOk<typeof reviewsCompanions> = [];
 
 	if (reviewsRes.data.length) {
 		const reviewsCompanionsRes = await reviewsCompanions(
@@ -43,7 +82,7 @@ export const findReviews = async (filter?: Where) => {
 		companions = reviewsCompanionsRes.data;
 	}
 
-	let tags: ReviewTagModel[] = [];
+	let tags: InferOk<typeof reviewTags> = [];
 
 	if (reviewsRes.data.length) {
 		const tagsRes = await reviewTags(
@@ -76,7 +115,7 @@ export const deleteReviewById = async (id: string) => {
 	}
 };
 
-export const createReview = async (data: CreateDetailReviewModel) => {
+export const createReview = async (data: CreateReviewModel) => {
 	const res = await insertReview({ id: ulid(), ...data });
 
 	if (!res.ok) {

@@ -1,9 +1,13 @@
-import type { CityModel } from "@/models/CityModel";
 import { select } from "@/utils/api/functions";
 import { InternalServerErrorException } from "@/utils/errors/InternalServerErrorException";
 import type { Where } from "@/utils/where-filter";
 
-const cities = select<CityModel>("cities");
+const cities = select<{
+	id: string;
+	name: string;
+	state: string;
+	created_at: Date;
+}>("cities");
 
 export const findCities = async (filter?: Where) => {
 	const res = await cities(filter);

@@ -13,7 +13,7 @@ export const POST = handleAPI()
 			access_token: z.string(),
 		}),
 	)
-	.fn(async (req) => {
+	.fn(async (req): Promise<{ user: UserModel; access_token: string }> => {
 		const res = await axios
 			.get<{
 				email: string;

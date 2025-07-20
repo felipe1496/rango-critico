@@ -1,7 +1,8 @@
+import z from "zod";
+import type { RestaurantModel } from "@/models/RestaurantModel";
 import { handleAPI } from "@/utils/api/handleAPI";
 import { authGuard } from "@/utils/api/middlewares/authGuard";
 import { where } from "@/utils/where-filter";
-import z from "zod";
 import { findRestaurants } from "./core";
 
 export const GET = handleAPI()
@@ -11,7 +12,7 @@ export const GET = handleAPI()
 			filter: z.string().optional(),
 		}),
 	)
-	.fn(async (req) => {
+	.fn(async (req): Promise<{ restaurants: RestaurantModel[] }> => {
 		const filter = req.queryParams.filter;
 
 		const whereFilter = where();
