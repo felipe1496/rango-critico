@@ -18,7 +18,7 @@ export const Rating: FC<Props> = ({ rating, disabled = false, onChange }) => {
 	};
 	// TODO: subtituir rating-hidden por X
 	return (
-		<div className="rating rating-half border">
+		<div className="rating rating-half">
 			<input
 				type="radio"
 				name={`rating-star-${ulid()}`}
