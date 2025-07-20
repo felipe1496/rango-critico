@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import { useAPI } from "../useAPI";
-import type { ApiParse, QueryOpts } from "@/utils/types";
 import type { CityModel } from "@/models/CityModel";
+import type { QueryOpts } from "@/utils/types";
 import { where } from "@/utils/where-filter";
+import { useAPI } from "../useAPI";
 
 export const useListCities = ({
 	queryKey = [],
 	...props
-}: QueryOpts<{ cities: ApiParse<CityModel>[] }> & {
+}: QueryOpts<{ cities: CityModel[] }> & {
 	querySearch?: string;
 } = {}) => {
 	const api = useAPI();

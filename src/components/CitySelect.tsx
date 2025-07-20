@@ -5,7 +5,6 @@ import Select from "react-select";
 import { useListCities } from "@/hooks/queries/useListCities";
 import useDebounce from "@/hooks/useDebounce";
 import type { CityModel } from "@/models/CityModel";
-import type { ApiParse } from "@/utils/types";
 import { Loader } from "./commons/icons/Loader";
 
 interface Props
@@ -18,8 +17,8 @@ interface Props
 		| "onInputChange"
 		| "filterOption"
 	> {
-	selected?: ApiParse<CityModel> | null;
-	onChange?: (r: ApiParse<CityModel> | null) => void;
+	selected?: CityModel | null;
+	onChange?: (r: CityModel | null) => void;
 }
 
 export const CitySelect: FC<Props> = ({
@@ -71,7 +70,7 @@ export const CitySelect: FC<Props> = ({
 			onInputChange={setQuery}
 			filterOption={() => true}
 			onChange={(opt) =>
-				onChange(opt ? (opt as { value: ApiParse<CityModel> }).value : null)
+				onChange(opt ? (opt as { value: CityModel }).value : null)
 			}
 			{...props}
 		/>

@@ -1,6 +1,21 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
+import { add } from "date-fns";
+import { isDate } from "lodash";
+import Image from "next/image";
 import { type FC, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { z } from "zod";
+import { DATA_FORMATS } from "@/constants/dateFormats";
+import { useCreateReview } from "@/hooks/mutations/useCreateReview";
+import { useDate } from "@/hooks/useDate";
+import type { RestaurantModel } from "@/models/RestaurantModel";
+import type { Rate } from "@/models/ReviewModel";
+import { CitySelect } from "./CitySelect";
+import { Button } from "./commons/Button";
 import {
 	Dialog,
 	DialogClose,
@@ -9,25 +24,10 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "./commons/Dialog";
-import { Button } from "./commons/Button";
-import { RestaurantSelect } from "./RestaurantSelect";
-import type { RestaurantModel } from "@/models/RestaurantModel";
-import Image from "next/image";
-import { Textarea } from "./commons/Textarea";
-import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { Rating } from "./commons/Rating";
-import { useCreateReview } from "@/hooks/mutations/useCreateReview";
-import type { Rate } from "@/models/ReviewModel";
 import { Loader } from "./commons/icons/Loader";
-import { toast } from "react-toastify";
-import { useQueryClient } from "@tanstack/react-query";
-import { useDate } from "@/hooks/useDate";
-import { isDate } from "lodash";
-import { DATA_FORMATS } from "@/constants/dateFormats";
-import { add } from "date-fns";
-import { CitySelect } from "./CitySelect";
+import { Rating } from "./commons/Rating";
+import { Textarea } from "./commons/Textarea";
+import { RestaurantSelect } from "./RestaurantSelect";
 
 const STEPS = {
 	ADD_RESTAURANT: "Adicione um restaurante",
@@ -49,7 +49,7 @@ export const ReviewDialog: FC = () => {
 			id: z.string(),
 			name: z.string(),
 			state: z.string(),
-			created_at: z.string(),
+			created_at: z.date(),
 		}),
 	});
 

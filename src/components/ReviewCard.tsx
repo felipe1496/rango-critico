@@ -9,7 +9,6 @@ import { useDeleteReview } from "@/hooks/mutations/useDeleteReview";
 import { useDate } from "@/hooks/useDate";
 import type { ReviewModel } from "@/models/ReviewModel";
 import { cn } from "@/utils/functions";
-import type { ApiParse } from "@/utils/types";
 import { Button } from "./commons/Button";
 import {
 	Dialog,
@@ -23,7 +22,7 @@ import { Loader } from "./commons/icons/Loader";
 import { Rating } from "./commons/Rating";
 
 interface Props {
-	data: ApiParse<ReviewModel>;
+	data: ReviewModel;
 }
 
 export const ReviewCard: FC<Props> = ({ data }) => {
@@ -117,7 +116,7 @@ export const ReviewCard: FC<Props> = ({ data }) => {
 			/>
 
 			<span className="text-zinc-500">
-				{date(data.visited_at, "iso").format("d 'de' MMMM 'de' yyyy")}
+				{date(data.visited_at).format("d 'de' MMMM 'de' yyyy")}
 			</span>
 
 			<div className="flex justify-between w-full">

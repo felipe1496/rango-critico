@@ -47,6 +47,3 @@ export type DateToString<T> = {
 			? DateToString<T[K]>
 			: T[K];
 };
-
-// TODO: fazer um interceptor no frontend para identificar e transformar para Date?
-export type ApiParse<Res> = DateToString<Res>;

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import { env } from "@/utils/env";
+import { reviveDates } from "@/utils/functions";
 
 const apiV1 = axios.create({
 	baseURL: `${env().NEXT_PUBLIC_API_URL}/v1`,
@@ -27,6 +28,11 @@ apiV1.interceptors.response.use(
 		return Promise.reject(error);
 	},
 );
+
+apiV1.interceptors.response.use((response) => {
+	response.data = reviveDates(response.data);
+	return response;
+});
 
 export const useAPI = () => {
 	return apiV1;

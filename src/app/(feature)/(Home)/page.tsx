@@ -1,12 +1,16 @@
 "use client";
 
-import { ReviewCard } from "@/components/ReviewCard";
-import { useListReviews } from "../../../hooks/queries/useListReviews";
-import { ReviewDialog } from "@/components/ReviewDialog";
 import { Loader } from "@/components/commons/icons/Loader";
+import { ReviewCard } from "@/components/ReviewCard";
+import { ReviewDialog } from "@/components/ReviewDialog";
+import { useListReviews } from "../../../hooks/queries/useListReviews";
 
 export default function HomePage() {
 	const { data: reviewsData, isFetching: reviewsIsFetching } = useListReviews();
+
+	{
+		reviewsData && console.log(typeof reviewsData.reviews[0].created_at);
+	}
 
 	return (
 		<main className="w-screen flex items-center justify-center flex-col px-4 pb-4">
