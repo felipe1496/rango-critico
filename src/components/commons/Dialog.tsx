@@ -1,18 +1,18 @@
-import { cn } from "@/utils/functions";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import * as RadixDialog from "@radix-ui/react-dialog";
+import * as RadixAlertDialog from "@radix-ui/react-alert-dialog";
 import type { ComponentProps, FC } from "react";
-// TODO: subtituir por alert dialog?
-export const Dialog = RadixDialog.Root;
-export const DialogTrigger = RadixDialog.DialogTrigger;
-export const DialogPortal = RadixDialog.DialogPortal;
+import { cn } from "@/utils/functions";
+
+export const Dialog = RadixAlertDialog.Root;
+export const DialogTrigger = RadixAlertDialog.AlertDialogTrigger;
+export const DialogPortal = RadixAlertDialog.AlertDialogPortal;
 
 const DialogOverlay = ({
 	className,
 	...props
-}: React.ComponentProps<typeof RadixDialog.Overlay>) => {
+}: React.ComponentProps<typeof RadixAlertDialog.Overlay>) => {
 	return (
-		<RadixDialog.Overlay
+		<RadixAlertDialog.Overlay
 			data-slot="dialog-overlay"
 			className={cn(
 				"fixed inset-0 z-50 bg-black/50 backdrop-blur-xs",
@@ -28,13 +28,13 @@ export const DialogContent = ({
 	children,
 	showCloseButton = true,
 	...props
-}: React.ComponentProps<typeof RadixDialog.Content> & {
+}: React.ComponentProps<typeof RadixAlertDialog.Content> & {
 	showCloseButton?: boolean;
 }) => {
 	return (
 		<DialogPortal data-slot="dialog-portal">
 			<DialogOverlay />
-			<RadixDialog.Content
+			<RadixAlertDialog.Content
 				data-slot="dialog-content"
 				className={cn(
 					"bg-background fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] sm:max-w-2xl translate-x-[-50%] translate-y-[-50%] rounded-sm shadow-lg duration-200",
@@ -44,15 +44,15 @@ export const DialogContent = ({
 			>
 				{children}
 				{showCloseButton && (
-					<RadixDialog.Close
+					<RadixAlertDialog.Cancel
 						data-slot="dialog-close"
 						className="ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 cursor-pointer"
 					>
 						<XMarkIcon className="size-5" />
 						<span className="sr-only">Close</span>
-					</RadixDialog.Close>
+					</RadixAlertDialog.Cancel>
 				)}
-			</RadixDialog.Content>
+			</RadixAlertDialog.Content>
 		</DialogPortal>
 	);
 };
@@ -74,14 +74,14 @@ export const DialogFooter = ({
 };
 
 export const DialogTitle: FC<
-	ComponentProps<typeof RadixDialog.DialogTitle>
+	ComponentProps<typeof RadixAlertDialog.AlertDialogTitle>
 > = ({ className, ...props }) => {
 	return (
-		<RadixDialog.DialogTitle
+		<RadixAlertDialog.AlertDialogTitle
 			className={cn("border-b p-3 border-zinc-200", className)}
 			{...props}
 		/>
 	);
 };
 
-export const DialogClose = RadixDialog.DialogClose;
+export const DialogClose = RadixAlertDialog.Cancel;
