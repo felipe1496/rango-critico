@@ -16,9 +16,9 @@ export const Rating: FC<Props> = ({ rating, disabled = false, onChange }) => {
 			onChange(parseFloat(event.target.value));
 		}
 	};
-
+	// TODO: subtituir rating-hidden por X
 	return (
-		<div className="rating rating-half">
+		<div className="rating rating-half border">
 			<input
 				type="radio"
 				name={`rating-star-${ulid()}`}
