@@ -1,14 +1,14 @@
-import {
-  CreateDetailReviewModel,
-  CreateReviewModel,
-  ReviewCompanionView,
-  ReviewTagModel,
-  ReviewViewModel,
+import type {
+	CreateDetailReviewModel,
+	CreateReviewModel,
+	ReviewCompanionView,
+	ReviewTagModel,
+	ReviewViewModel,
 } from "@/models/ReviewModel";
 import { $delete, insert, select } from "@/utils/api/functions";
 import { InternalServerErrorException } from "@/utils/errors/InternalServerErrorException";
 
-import { Where, where } from "@/utils/where-filter";
+import { type Where, where } from "@/utils/where-filter";
 import { set, toNumber } from "lodash";
 import { ulid } from "ulid";
 
@@ -19,71 +19,71 @@ const deleteReview = $delete("reviews");
 const insertReview = insert<CreateReviewModel, ReviewViewModel>("reviews");
 
 export const findReviews = async (filter?: Where) => {
-  const reviewsRes = await reviewsView(filter);
+	const reviewsRes = await reviewsView(filter);
 
-  if (!reviewsRes.ok) {
-    throw new InternalServerErrorException("Error finding reviews");
-  }
+	if (!reviewsRes.ok) {
+		throw new InternalServerErrorException("Error finding reviews");
+	}
 
-  let companions: ReviewCompanionView[] = [];
+	let companions: ReviewCompanionView[] = [];
 
-  if (reviewsRes.data.length) {
-    const reviewsCompanionsRes = await reviewsCompanions(
-      where().and(
-        "review_id",
-        "in",
-        reviewsRes.data.map((r) => r.id)
-      )
-    );
+	if (reviewsRes.data.length) {
+		const reviewsCompanionsRes = await reviewsCompanions(
+			where().and(
+				"review_id",
+				"in",
+				reviewsRes.data.map((r) => r.id),
+			),
+		);
 
-    if (!reviewsCompanionsRes.ok) {
-      throw new InternalServerErrorException("Error finding reviews");
-    }
+		if (!reviewsCompanionsRes.ok) {
+			throw new InternalServerErrorException("Error finding reviews");
+		}
 
-    companions = reviewsCompanionsRes.data;
-  }
+		companions = reviewsCompanionsRes.data;
+	}
 
-  let tags: ReviewTagModel[] = [];
+	let tags: ReviewTagModel[] = [];
 
-  if (reviewsRes.data.length) {
-    const tagsRes = await reviewTags(
-      where().and(
-        "review_id",
-        "in",
-        reviewsRes.data.map((r) => r.id)
-      )
-    );
+	if (reviewsRes.data.length) {
+		const tagsRes = await reviewTags(
+			where().and(
+				"review_id",
+				"in",
+				reviewsRes.data.map((r) => r.id),
+			),
+		);
 
-    if (!tagsRes.ok) {
-      throw new InternalServerErrorException("Error finding reviews");
-    }
+		if (!tagsRes.ok) {
+			throw new InternalServerErrorException("Error finding reviews");
+		}
 
-    tags = tagsRes.data;
-  }
+		tags = tagsRes.data;
+	}
 
-  return reviewsRes.data.map((r) => ({
-    ...set(r, "rating", toNumber(r.rating)),
-    companions: companions.filter((c) => c.review_id === r.id),
-    tags: tags.filter((t) => t.review_id === r.id).map((t) => t.tag),
-  }));
+	return reviewsRes.data.map((r) => ({
+		...set(r, "rating", toNumber(r.rating)),
+		companions: companions.filter((c) => c.review_id === r.id),
+		tags: tags.filter((t) => t.review_id === r.id).map((t) => t.tag),
+	}));
 };
 
 export const deleteReviewById = async (id: string) => {
-  const res = await deleteReview(where().and("id", "eq", id));
+	const res = await deleteReview(where().and("id", "eq", id));
 
-  if (!res.ok) {
-    throw new InternalServerErrorException("Error deleting review");
-  }
+	if (!res.ok) {
+		throw new InternalServerErrorException("Error deleting review");
+	}
 };
 
 export const createReview = async (data: CreateDetailReviewModel) => {
-  const res = await insertReview({ id: ulid(), ...data });
+	const res = await insertReview({ id: ulid(), ...data });
 
-  if (!res.ok) {
-    throw new InternalServerErrorException("Error creating review");
-  }
+	if (!res.ok) {
+		throw new InternalServerErrorException("Error creating review");
+	}
 
-  const review = await findReviews(where().and("id", "eq", res.data[0].id));
+	const review = await findReviews(where().and("id", "eq", res.data[0].id));
 
-  return review[0];
+	return review[0];
 };

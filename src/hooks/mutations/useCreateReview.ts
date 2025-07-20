@@ -1,20 +1,23 @@
 import { useMutation } from "@tanstack/react-query";
 import { useAPI } from "../useAPI";
-import { MutationOpts } from "@/utils/types";
-import { CreateDetailReviewModel, ReviewDetail } from "@/models/ReviewModel";
+import type { MutationOpts } from "@/utils/types";
+import type {
+	CreateDetailReviewModel,
+	ReviewDetail,
+} from "@/models/ReviewModel";
 
 export const useCreateReview = ({
-  mutationKey = [],
-  ...props
+	mutationKey = [],
+	...props
 }: MutationOpts<
-  ReviewDetail,
-  Omit<CreateDetailReviewModel, "user_id">
+	ReviewDetail,
+	Omit<CreateDetailReviewModel, "user_id">
 > = {}) => {
-  const api = useAPI();
+	const api = useAPI();
 
-  return useMutation({
-    mutationKey: ["create-review", ...mutationKey],
-    mutationFn: (props) => api.post("/reviews", props).then((res) => res.data),
-    ...props,
-  });
+	return useMutation({
+		mutationKey: ["create-review", ...mutationKey],
+		mutationFn: (props) => api.post("/reviews", props).then((res) => res.data),
+		...props,
+	});
 };

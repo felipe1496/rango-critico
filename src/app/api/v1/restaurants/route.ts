@@ -5,24 +5,24 @@ import z from "zod";
 import { findRestaurants } from "./core";
 
 export const GET = handleAPI()
-  .middleware(authGuard)
-  .queryParams(
-    z.object({
-      filter: z.string().optional(),
-    })
-  )
-  .fn(async (req) => {
-    const filter = req.queryParams.filter;
+	.middleware(authGuard)
+	.queryParams(
+		z.object({
+			filter: z.string().optional(),
+		}),
+	)
+	.fn(async (req) => {
+		const filter = req.queryParams.filter;
 
-    const whereFilter = where();
+		const whereFilter = where();
 
-    if (filter) {
-      whereFilter.addExpression(filter);
-    }
+		if (filter) {
+			whereFilter.addExpression(filter);
+		}
 
-    const restaurants = await findRestaurants(whereFilter);
+		const restaurants = await findRestaurants(whereFilter);
 
-    return {
-      restaurants,
-    };
-  });
+		return {
+			restaurants,
+		};
+	});
