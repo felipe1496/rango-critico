@@ -116,8 +116,11 @@ export const ReviewDialog: FC = () => {
     }
     if (step === STEPS.REVIEW) {
       return (
-        <DialogContent className="sm:max-w-[800px] max-h-[568px] overflow-scroll">
-          <form onSubmit={handleSubmit(onSubmit)}>
+        <DialogContent className="h-full sm:h-auto overflow-scroll">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="h-full flex flex-col"
+          >
             <DialogTitle>{step}</DialogTitle>
             <div className="p-4 flex justify-between gap-6 flex-col items-center md:items-start md:flex-row">
               <div>

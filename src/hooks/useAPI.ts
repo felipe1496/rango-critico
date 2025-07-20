@@ -18,6 +18,7 @@ apiV1.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response.status === 401) {
+      // TODO: consertar bug onde toast nao permanece depois de navegar para tela de login
       toast.error("Sua sessão expirou!");
       localStorage.removeItem("user");
       localStorage.removeItem("access_token");
