@@ -17,6 +17,9 @@
 		"enabled": true,
 		"rules": {
 			"recommended": true,
+			"suspicious": {
+				"noExplicitAny": "error"
+			},
 			"style": {
 				"useTemplate": {
 					"level": "warn",
