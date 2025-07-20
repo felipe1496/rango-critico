@@ -116,7 +116,7 @@ export const ReviewDialog: FC = () => {
     }
     if (step === STEPS.REVIEW && restaurant) {
       return (
-        <DialogContent className="h-full sm:h-auto overflow-scroll max-w-4xl w-full">
+        <DialogContent className="h-full sm:h-auto overflow-scroll sm:max-w-4xl w-full">
           <DialogTitle>{step}</DialogTitle>
           <form
             onSubmit={handleSubmit(onSubmit)}
