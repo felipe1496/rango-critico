@@ -16,7 +16,7 @@ const geistMono = Rubik({
 });
 
 export const metadata: Metadata = {
-  title: "Rango Crítico",
+  title: "Rango Crítico • Seu App de Avaliação de Restaurantes",
   description:
     "Tercerize sua memória com o Rango Crítico, uma banco de dados das suas memórias do que achou dos restaurantes que você visitou",
 };

@@ -5,8 +5,8 @@ import { Github } from "./commons/icons/Github";
 export const Footer: FC = () => (
   <footer className="bg-zinc-100 w-screen px-4 py-8 border-t border-zinc-200 flex flex-col gap-8 mt-auto items-center">
     <div className="max-w-4xl w-full justify-center flex flex-col gap-4">
-      <div className="flex items-center justify-between w-full">
-        <div className="flex flex-col gap-2 md:flex-row md:gap-4 ">
+      <div className="flex flex-col gap-4 items-center justify-between w-full md:flex-row">
+        <div className="flex flex-col gap-2 md:flex-row md:gap-4 items-center text-center w-full">
           <Link
             href="/about"
             className="font-semibold hover:underline text-sm text-zinc-500"
@@ -51,7 +51,7 @@ export const Footer: FC = () => (
         </div>
       </div>
 
-      <span className="text-zinc-500 text-sm">
+      <span className="text-zinc-500 text-sm text-center md:text-start">
         Rango Crítico | Copyright © 2025 - Todos os Direitos Reservados
       </span>
     </div>

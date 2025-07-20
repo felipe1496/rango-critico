@@ -54,7 +54,6 @@ export type ReviewViewModel = {
   rating: Rate;
   restaurant_name: string;
   restaurant_avatar_url: string;
-  endereco: string;
   user_id: string;
   city_name: string;
   state: string;

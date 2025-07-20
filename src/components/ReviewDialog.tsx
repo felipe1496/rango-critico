@@ -114,19 +114,19 @@ export const ReviewDialog: FC = () => {
         </DialogContent>
       );
     }
-    if (step === STEPS.REVIEW) {
+    if (step === STEPS.REVIEW && restaurant) {
       return (
-        <DialogContent className="h-full sm:h-auto overflow-scroll">
+        <DialogContent className="h-full sm:h-auto overflow-scroll max-w-4xl w-full">
+          <DialogTitle>{step}</DialogTitle>
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="h-full flex flex-col"
           >
-            <DialogTitle>{step}</DialogTitle>
             <div className="p-4 flex justify-between gap-6 flex-col items-center md:items-start md:flex-row">
               <div>
                 <Image
-                  src={restaurant?.avatar_url ?? ""}
-                  alt={restaurant?.name ?? ""}
+                  src={restaurant.avatar_url ?? ""}
+                  alt={restaurant.name ?? ""}
                   width={150}
                   height={150}
                   className="border"
@@ -134,12 +134,12 @@ export const ReviewDialog: FC = () => {
               </div>
               <div className="flex flex-col gap-3 w-full">
                 <div className="flex flex-col gap-1">
-                  <span className="font-semibold">{restaurant?.name}</span>
+                  <span className="font-semibold">{restaurant.name}</span>
                   <span
                     className="text-zinc-400 text-xs line-clamp-2"
-                    title={restaurant?.description}
+                    title={restaurant.description}
                   >
-                    {restaurant?.description}
+                    {restaurant.description}
                   </span>
                 </div>
                 <div className="flex flex-col gap-2 items-start">
