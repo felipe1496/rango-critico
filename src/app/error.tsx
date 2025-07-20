@@ -1,11 +1,11 @@
 "use client";
 
-import { Button } from "@/components/commons/Button";
 import type { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { Button } from "@/components/commons/Button";
 
-const ErrorBoundaryPage: NextPage<{ error: Error }> = ({ error }) => {
+const ErrorBoundaryPage: NextPage<{ error: any }> = ({ error }) => {
 	return (
 		<main className="h-screen w-full bg-linear-to-br from-white to bg-red-200 flex items-center justify-center flex-col">
 			<Image
