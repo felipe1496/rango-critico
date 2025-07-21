@@ -58,16 +58,16 @@ export const ReviewCard: FC<Props> = ({ data }) => {
 				<div className="flex flex-col gap-4 md:flex-row">
 					<div className="flex gap-4 items-center">
 						<Image
-							src={data.restaurant_avatar_url}
+							src={data.restaurant.avatar_url ?? ""}
 							alt="Restaurant"
 							width={48}
 							height={48}
 							className="rounded-full"
 						/>
 						<div className="flex flex-col">
-							<span className="font-bold">{data.restaurant_name}</span>
+							<span className="font-bold">{data.restaurant.name}</span>
 							<span className="text-sm text-zinc-500">
-								{`${data.city_name}, ${data.state}`}
+								{`${data.city.name}, ${data.city.state}`}
 							</span>
 						</div>
 					</div>
@@ -122,8 +122,8 @@ export const ReviewCard: FC<Props> = ({ data }) => {
 				<div className="flex group">
 					{data.companions.map((companion, idx) => (
 						<Image
-							key={`review-user-${idx}-${companion.user_id}`}
-							src={companion.avatar_url}
+							key={`review-user-${idx}-${companion.name}-${companion.avatar_url}`}
+							src={companion.avatar_url ?? ""}
 							alt="User"
 							width={32}
 							height={32}
@@ -131,7 +131,7 @@ export const ReviewCard: FC<Props> = ({ data }) => {
 								"rounded-full",
 								idx !== 0 && "-ml-2 group-hover:ml-0 transition-all",
 							)}
-							title={companion.companion_name}
+							title={companion.name}
 						/>
 					))}
 				</div>

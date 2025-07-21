@@ -1,4 +1,4 @@
-import { set, toNumber } from "lodash";
+import { toNumber } from "lodash";
 import { ulid } from "ulid";
 import type { CreateReviewModel, Rate } from "@/models/ReviewModel";
 import { $delete, insert, select } from "@/utils/api/functions";
@@ -9,15 +9,18 @@ import { type Where, where } from "@/utils/where-filter";
 const reviewsView = select<{
 	id: string;
 	content: string;
-	rating: Rate;
-	restaurant_name: string;
-	restaurant_avatar_url: string;
+	rating: number;
 	user_id: string;
-	city_name: string;
-	state: string;
 	updated_at: Date;
 	created_at: Date;
 	visited_at: Date;
+	restaurant_id: string;
+	restaurant_name: string;
+	restaurant_description: string;
+	restaurant_avatar_url?: string | null;
+	city_id: string;
+	city_name: string;
+	city_state: string;
 }>("v_reviews");
 const reviewsCompanions = select<{
 	review_id: string;
@@ -101,8 +104,30 @@ export const findReviews = async (filter?: Where) => {
 	}
 
 	return reviewsRes.data.map((r) => ({
-		...set(r, "rating", toNumber(r.rating)),
-		companions: companions.filter((c) => c.review_id === r.id),
+		id: r.id,
+		content: r.content,
+		rating: toNumber(r.rating) as Rate,
+		user_id: r.user_id,
+		updated_at: r.updated_at,
+		created_at: r.created_at,
+		visited_at: r.visited_at,
+		restaurant: {
+			id: r.restaurant_id,
+			name: r.restaurant_name,
+			description: r.restaurant_description,
+			avatar_url: r.restaurant_avatar_url,
+		},
+		city: {
+			id: r.city_id,
+			name: r.city_name,
+			state: r.city_state,
+		},
+		companions: companions
+			.filter((c) => c.review_id === r.id)
+			.map((c) => ({
+				name: c.companion_name,
+				avatar_url: c.avatar_url,
+			})),
 		tags: tags.filter((t) => t.review_id === r.id).map((t) => t.tag),
 	}));
 };

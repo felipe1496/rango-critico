@@ -3,6 +3,5 @@ export type RestaurantModel = {
 	name: string;
 	description: string;
 	avatar_url?: string | null;
-	city_id: string;
 	created_at: Date;
 };
