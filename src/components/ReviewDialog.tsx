@@ -11,9 +11,9 @@ import { toast } from "react-toastify";
 import { z } from "zod";
 import { DATA_FORMATS } from "@/constants/dateFormats";
 import { useCreateReview } from "@/hooks/mutations/useCreateReview";
-import { useDate } from "@/hooks/useDate";
 import type { RestaurantModel } from "@/models/RestaurantModel";
 import type { Rate } from "@/models/ReviewModel";
+import { date } from "@/utils/date";
 import { CitySelect } from "./CitySelect";
 import { Button } from "./commons/Button";
 import {
@@ -38,8 +38,6 @@ export const ReviewDialog: FC = () => {
 	const [open, setOpen] = useState(false);
 	const [step, setStep] = useState(STEPS.ADD_RESTAURANT);
 	const [restaurant, setRestaurant] = useState<RestaurantModel | null>(null);
-
-	const date = useDate();
 
 	const formSchema = z.object({
 		content: z.string(),

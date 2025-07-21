@@ -6,8 +6,8 @@ import Image from "next/image";
 import { type FC, useState } from "react";
 import { toast } from "react-toastify";
 import { useDeleteReview } from "@/hooks/mutations/useDeleteReview";
-import { useDate } from "@/hooks/useDate";
 import type { ReviewModel } from "@/models/ReviewModel";
+import { date } from "@/utils/date";
 import { cn } from "@/utils/functions";
 import { Button } from "./commons/Button";
 import {
@@ -28,7 +28,6 @@ interface Props {
 export const ReviewCard: FC<Props> = ({ data }) => {
 	const [expandTags, setExpandTags] = useState(false);
 	const [open, setOpen] = useState(false);
-	const date = useDate();
 
 	const queryClient = useQueryClient();
 
@@ -73,7 +72,7 @@ export const ReviewCard: FC<Props> = ({ data }) => {
 						</div>
 					</div>
 
-					<Rating rating={data.rating} disabled />
+					<Rating rating={data.rating} disabled readonly />
 				</div>
 
 				<Dialog open={open} onOpenChange={setOpen}>
