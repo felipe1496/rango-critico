@@ -5,7 +5,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { add } from "date-fns";
 import { isDate } from "lodash";
 import Image from "next/image";
-import { type FC, useState } from "react";
+import { type FC, type ReactNode, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { z } from "zod";
@@ -34,7 +34,11 @@ const STEPS = {
 	REVIEW: "Faça sua crítica",
 };
 
-export const ReviewDialog: FC = () => {
+interface Props {
+	children?: ReactNode;
+}
+
+export const ReviewDialog: FC<Props> = ({ children }) => {
 	const [open, setOpen] = useState(false);
 	const [step, setStep] = useState(STEPS.ADD_RESTAURANT);
 	const [restaurant, setRestaurant] = useState<RestaurantModel | null>(null);
@@ -114,7 +118,7 @@ export const ReviewDialog: FC = () => {
 		}
 		if (step === STEPS.REVIEW && restaurant) {
 			return (
-				<DialogContent className="h-full sm:h-auto overflow-scroll sm:max-w-4xl w-full">
+				<DialogContent className="h-full sm:h-auto sm:max-w-4xl w-full overflow-y-auto">
 					<DialogTitle>{step}</DialogTitle>
 					<form
 						onSubmit={handleSubmit(onSubmit)}
@@ -223,12 +227,7 @@ export const ReviewDialog: FC = () => {
 
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
-			<DialogTrigger asChild>
-				<Button size="sm">
-					<span className="font-bold">+</span>
-					Adicionar nova Crítica
-				</Button>
-			</DialogTrigger>
+			<DialogTrigger asChild>{children}</DialogTrigger>
 
 			{getStep()}
 		</Dialog>

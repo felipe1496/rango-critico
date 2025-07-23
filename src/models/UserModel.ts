@@ -4,9 +4,10 @@ export type UserModel = {
 	email: string;
 	avatar_url?: string | null;
 	created_at: Date;
+	nickname: string;
 };
 
 export type CreateUserModel = Pick<
 	UserModel,
-	"id" | "name" | "email" | "avatar_url"
+	"id" | "name" | "email" | "avatar_url" | "nickname"
 >;

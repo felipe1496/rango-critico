@@ -4,13 +4,17 @@ import z from "zod";
 import type { UserModel } from "@/models/UserModel";
 import { handleAPI } from "@/utils/api/handleAPI";
 import { env } from "@/utils/env";
+import { BadRequestException } from "@/utils/errors/BadRequestException";
+import { ConflictException } from "@/utils/errors/ConflictException";
 import { ForbiddenException } from "@/utils/errors/ForbiddenException";
-import { createUser, findUserByEmail } from "../core";
+import { where } from "@/utils/where-filter";
+import { createUser, findUserByEmail, findUsers } from "../core";
 
 export const POST = handleAPI()
 	.body(
 		z.object({
 			access_token: z.string(),
+			nickname: z.string().min(1).max(32).optional(),
 		}),
 	)
 	.fn(async (req): Promise<{ user: UserModel; access_token: string }> => {
@@ -40,10 +44,23 @@ export const POST = handleAPI()
 		if (userExists) {
 			authUser = userExists;
 		} else {
+			if (!req.body.nickname) {
+				throw new BadRequestException("Nickname is required");
+			}
+
+			const nicknameExists = await findUsers(
+				where().and("nickname", "eq", req.body.nickname),
+			);
+
+			if (nicknameExists.length) {
+				throw new ConflictException("Nickname already exists");
+			}
+
 			const createdUser = await createUser({
 				email: res.data.email,
 				name: res.data.name,
 				avatar_url: res.data.picture,
+				nickname: req.body.nickname,
 			});
 
 			authUser = createdUser;

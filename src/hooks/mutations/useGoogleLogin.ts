@@ -1,7 +1,7 @@
+import { type UseMutationOptions, useMutation } from "@tanstack/react-query";
 import { useAPI } from "@/hooks/useAPI";
 import type { UserModel } from "@/models/UserModel";
 import type { ApiExceptionModel } from "@/utils/types";
-import { useMutation, type UseMutationOptions } from "@tanstack/react-query";
 export const useGoogleLogin = ({
 	mutationKey = [],
 	...props
@@ -9,7 +9,7 @@ export const useGoogleLogin = ({
 	UseMutationOptions<
 		{ user: UserModel; access_token: string },
 		ApiExceptionModel,
-		{ access_token: string }
+		{ access_token: string; nickname?: string }
 	>,
 	"mutationFn"
 > = {}) => {

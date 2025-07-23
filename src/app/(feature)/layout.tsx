@@ -1,13 +1,13 @@
+import type { FC, ReactNode } from "react";
 import { Footer } from "@/components/Footer";
 import { NavBar } from "@/components/NavBar";
-import type { FC, ReactNode } from "react";
 
 const Layout: FC<Readonly<{ children: ReactNode }>> = ({ children }) => (
-	<>
+	<div className="flex flex-col pb-16 md:pb-0">
 		<NavBar />
-		<div className="pt-16">{children}</div>
+		<div>{children}</div>
 		<Footer />
-	</>
+	</div>
 );
 
 export default Layout;

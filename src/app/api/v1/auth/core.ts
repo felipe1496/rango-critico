@@ -4,7 +4,7 @@ import { insert, select } from "@/utils/api/functions";
 import { ConflictException } from "@/utils/errors/ConflictException";
 import { InternalServerErrorException } from "@/utils/errors/InternalServerErrorException";
 import { NotFoundException } from "@/utils/errors/NotFoundException";
-import { where } from "@/utils/where-filter";
+import { Where, where } from "@/utils/where-filter";
 
 const users = select<UserModel>("users");
 const save = insert<CreateUserModel, UserModel>("users");
@@ -35,4 +35,14 @@ export const createUser = async (data: Omit<CreateUserModel, "id">) => {
 	}
 
 	return res.data[0];
+};
+
+export const findUsers = async (filter?: Where) => {
+	const res = await users(filter);
+
+	if (!res.ok) {
+		throw new InternalServerErrorException("Error finding users");
+	}
+
+	return res.data;
 };

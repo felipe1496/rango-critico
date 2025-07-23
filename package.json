@@ -10,7 +10,7 @@
 		"db:up": "docker compose up -d",
 		"db:migrate": "node src/cmd/migrate.mjs",
 		"style:format": "npx @biomejs/biome format --write",
-		"lint:fix": "npx @biomejs/biome lint --write",
+		"lint:fix": "npx @biomejs/biome lint --write && tsc --noEmit",
 		"prepare": "test \"$NODE_ENV\" = \"production\" || npx husky"
 	},
 	"dependencies": {

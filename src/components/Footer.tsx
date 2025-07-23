@@ -3,8 +3,8 @@ import type { FC } from "react";
 import { Github } from "./commons/icons/Github";
 
 export const Footer: FC = () => (
-	<footer className="bg-zinc-100 w-screen px-4 py-8 border-t border-zinc-200 flex flex-col gap-8 mt-auto items-center">
-		<div className="max-w-4xl w-full justify-center flex flex-col gap-4">
+	<footer className="bg-zinc-100 px-4 py-8 border-t border-zinc-200 flex flex-col gap-8 mt-auto items-center w-full">
+		<div className="max-w-4xl flex flex-col gap-4 w-full">
 			<div className="flex flex-col gap-4 items-center justify-between w-full md:flex-row">
 				<div className="flex flex-col gap-2 md:flex-row md:gap-4 items-center text-center w-full">
 					<Link

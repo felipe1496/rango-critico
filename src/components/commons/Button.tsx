@@ -1,5 +1,5 @@
-import { cn } from "@/utils/functions";
 import type { ButtonHTMLAttributes, FC } from "react";
+import { cn } from "@/utils/functions";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 	variant?: keyof typeof variants;
@@ -22,9 +22,11 @@ export const Button: FC<Props> = ({
 	className,
 	variant = "default",
 	size = "md",
+	type = "button",
 	...props
 }) => (
 	<button
+		type={type}
 		className={cn(
 			"cursor-pointer inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors w-fit",
 			variants[variant],
