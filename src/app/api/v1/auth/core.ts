@@ -4,7 +4,7 @@ import { insert, select } from "@/utils/api/functions";
 import { ConflictException } from "@/utils/errors/ConflictException";
 import { InternalServerErrorException } from "@/utils/errors/InternalServerErrorException";
 import { NotFoundException } from "@/utils/errors/NotFoundException";
-import { Where, where } from "@/utils/where-filter";
+import { type Where, where } from "@/utils/where-filter";
 
 const users = select<UserModel>("users");
 const save = insert<CreateUserModel, UserModel>("users");
